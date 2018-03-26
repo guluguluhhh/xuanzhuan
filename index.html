@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图</title>
+	<link rel="stylesheet" type="text/css" href="css/css.css"/>
+</head>
+<body>
+<div class="wrap" id="wrap">
+   <div class="slide" id="slide">
+       <ul>
+           <li><a href="#"><img src="images/slidepic1.jpg" alt=""/></a></li>
+           <li><a href="#"><img src="images/slidepic2.jpg" alt=""/></a></li>
+           <li><a href="#"><img src="images/slidepic3.jpg" alt=""/></a></li>
+           <li><a href="#"><img src="images/slidepic4.jpg" alt=""/></a></li>
+           <li><a href="#"><img src="images/slidepic5.jpg" alt=""/></a></li>
+       </ul>
+       <div class="arrow" id="arrow">
+           <a href="javascript:;" class="prev"></a>
+           <a href="javascript:;" class="next"></a>
+       </div>
+   </div>
+</div>
+</body>
+</html>
+<script src="js/tools.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var wrap=document.getElementById("wrap");
+    var slide=document.getElementById("slide");
+    var arrow=document.getElementById("arrow");
+    var aa=arrow.children;
+    var lis=slide.getElementsByTagName("li");
+    	wrap.onmouseover=function(){
+    		animate(arrow,{opacity: 100});
+    	}
+    	wrap.onmouseout=function(){
+    		animate(arrow,{opacity: 0});
+    	}
+    var json = [
+        {   //  1
+            width:400,
+            top:20,
+            left:50,
+            opacity:20,
+            z:2
+        },
+        {  // 2
+            width:600,
+            top:70,
+            left:0,
+            opacity:80,
+            z:3
+        },
+        {   // 3
+            width:800,
+            top:100,
+            left:200,
+            opacity:100,
+            z:4
+        },
+        {  // 4
+            width:600,
+            top:70,
+            left:600,
+            opacity:80,
+            z:3
+        },
+        {   //5
+            width:400,
+            top:20,
+            left:750,
+            opacity:20,
+            z:2
+        }
+    ];
+    getstyle();
+    var cut=true;
+    for(var k in aa){
+    	aa[k].onclick=function(){
+    		if(this.className=="prev"){
+    			if(cut==true){
+    				change(true);
+    				cut=false;
+    			}
+    		}else{
+    			if(cut==true){
+    				change(false);
+    				cut=false;
+    			}
+    		}
+    	}
+    }
+    function change(flag){
+    	if(flag){
+    		json.unshift(json.pop());
+    	}else{
+    		json.push(json.shift());
+    	}
+    	getstyle();
+    }
+    function getstyle(){
+    	for(var i=0;i<lis.length;i++){
+    		animate(lis[i],{
+    		width: json[i].width,
+    		top: json[i].top,
+    		left: json[i].left,
+    		opacity: json[i].opacity,
+    		zIndex: json[i].z
+    		},function(){
+    			cut=true;
+    		})
+   	 	}
+    }
+
+</script>
